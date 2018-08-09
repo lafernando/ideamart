@@ -5,7 +5,7 @@ import ballerina/io;
 
 endpoint ideamart:Client ideaMartEP {
     applicationId : "APP_000001",
-    password : "password",
+    password : "password",            // use config API when using real values
     baseURL : "http://localhost:7000" // production URL, use: PROD_BASE_URL
 };
 
