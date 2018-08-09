@@ -1,4 +1,3 @@
-import ballerina/log;
 import ballerina/test;
 import ballerina/config;
 import laf/ideamart;
