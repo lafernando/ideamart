@@ -1,4 +1,5 @@
 import ballerina/http;
+import ballerina/io;
 
 public type IdeaMartConnector object {
 
@@ -6,23 +7,30 @@ public type IdeaMartConnector object {
 
     public IdeaMartConfiguration config;
 
-    new(config) { }
+    public function init(IdeaMartConfiguration pconfig) { 
+        self.config = pconfig;
+        http:ClientEndpointConfig hc = { url: BASE_URL };
+        self.client.init(hc);
+    }
 
     public function sendSMS(string[] destinationAddrs, string message, string sourceAddr) returns string|error;
 
-}
+};
 
 function IdeaMartConnector::sendSMS(string[] destinationAddrs, string message, string sourceAddr) returns string|error {
     endpoint http:Client httpClient = self.client;
     http:Request request = new;
-    json msg = { "message" : message, "destinationAddresses" : destinationAddrs, "applicationId" : config.applicationId,
-                 "password" : config.password };
+    json msg = { "message" : message, "destinationAddresses" : check <json> destinationAddrs, 
+                 "applicationId" : self.config.applicationId,
+                 "password" : self.config.password };
     request.setJsonPayload(untaint msg);
-    var response = httpClient->post("https://api.dialog.lk/sms/send", request);
+    io:println(msg);
+    var response = httpClient->post("/sms/send", request);
+    io:println(response);
     match response {
         http:Response httpResponse => {
-            json payload = httpResponse.getJsonPaload();
-            return payload.statusCode;
+            json payload = check httpResponse.getJsonPayload();
+            return check <string> payload.statusCode;
         }
         error err => {
             return err;
