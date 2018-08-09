@@ -1,0 +1,7 @@
+[project]
+org-name = "laf"
+version = "0.1.0"
+authors = ["lafernando"]
+repository = "https://github.com/lafernando/ideamart"
+keywords = ["idemart","dialog"]
+license = "Apache-2.0"
