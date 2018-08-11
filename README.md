@@ -10,8 +10,8 @@ import ballerina/io;
 
 endpoint ideamart:Client ideaMartEP {
     applicationId : "APP_000001",
-    password : "password",            // use the config API when using real values
-    baseURL : "http://localhost:7000" // production URL, use: PROD_BASE_URL
+    password : "password",            // use config API when using real values
+    baseURL : PROD_BASE_URL           // change this if you're using the simulator, e.g. "http://localhost:7000"
 };
 
 @test:Config
